@@ -1,0 +1,119 @@
+    <script>
+        const pbo = {
+            // Model untuk database
+            model: {
+                mahasiswa: [
+                    { username: 'silvy', pin: 'silvy17' },
+                    { username: 'afrilia', pin: 'afrilia04' },
+                    { username: 'salsadila', pin: 'salsadila05' },
+                ],
+                barang: [
+                    { nama: 'Kacamata', harga: '15.000' },
+                    { nama: 'Ikat Rambut', harga: '10.000' },
+                    { nama: 'Gelang', harga: '10.000' },
+                    { nama: 'Fake Nails', harga: '13.000' },
+                ],
+            },
+            // View untuk tampilan
+            view: {
+                signform: function () {
+                    return `
+                        <div class="input-form">
+                            Username: <input type='text' id='username'><br/>
+                            Pin: <input type='password' id='pin'><br/>
+                            <button id='login'>Login</button>
+                            <button id='cancel'>Cancel</button>
+                        </div>
+                    `;
+                },
+                katalog: function () {
+                    let barangList = pbo.model.barang.map((item) => `
+                        <tr>
+                            <td>${item.nama}</td>
+                            <td>${item.harga}</td>
+                            <td>${item.stok}</td>
+                        </tr>
+                    `).join('');
+                    
+                    return `
+                        <div class="katalog-barang">
+                            <h2>Katalog Barang</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Harga</th>
+                                        <th>Stok</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${barangList}
+                                </tbody>
+                            </table>
+                            <h3>Tambah Barang Baru</h3>
+                            <input type="text" id="namaBarang" placeholder="Nama Barang">
+                            <input type="text" id="hargaBarang" placeholder="Harga Barang">
+                            <input type="number" id="stokBarang" placeholder="Stok Barang">
+                            <button id="tambahBarang">Tambah</button>
+                        </div>
+                    `;
+                },
+            },
+
+            // Controller untuk perlakuan terhadap view dan database
+            controller: {
+                init: function () {
+                    const app = document.getElementById('app');
+                    app.innerHTML = pbo.view.signform();
+                    
+                    document.getElementById('login').addEventListener('click', this.signin);
+                    document.getElementById('cancel').addEventListener('click', this.signout);
+                },
+                
+                signin: function () {
+                    const username = document.getElementById('username').value;
+                    const pin = document.getElementById('pin').value;
+
+                    const userFound = pbo.model.mahasiswa.find(
+                        (user) => user.username === username && user.pin === pin
+                    );
+
+                    if (userFound) {
+                        alert('Login berhasil!');
+                        const app = document.getElementById('app');
+                        app.innerHTML = pbo.view.katalog();
+
+                        document.getElementById('tambahBarang').addEventListener('click', pbo.controller.tambahBarang);
+                    } else {
+                        alert('Username atau Pin salah!');
+                    }
+                },
+                
+                signout: function () {
+                    document.getElementById('username').value = '';
+                    document.getElementById('pin').value = '';
+                },
+                
+                tambahBarang: function () {
+                    const nama = document.getElementById('namaBarang').value;
+                    const harga = document.getElementById('hargaBarang').value;
+                    const stok = document.getElementById('stokBarang').value;
+
+                    if (nama && harga && stok) {
+                        pbo.model.barang.push({ nama, harga, stok: parseInt(stok) });
+                        alert('Barang berhasil ditambahkan!');
+                        
+                        const app = document.getElementById('app');
+                        app.innerHTML = pbo.view.katalog();
+                        
+                        document.getElementById('tambahBarang').addEventListener('click', pbo.controller.tambahBarang);
+                    } else {
+                        alert('Mohon isi semua kolom!');
+                    }
+                },
+            },
+        };
+
+        // Inisialisasi programnya
+        pbo.controller.init();
+    </script>
