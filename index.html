@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form & Katalog Barang</title>
+    <link rel="stylesheet" href="./pertemuan10.css">
+</head>
+<body>
+    <div id="app"></div>
+
     <script>
         const pbo = {
             // Model untuk database
@@ -7,7 +18,7 @@
                     { username: 'afrilia', pin: 'afrilia04' },
                     { username: 'salsadila', pin: 'salsadila05' },
                 ],
-                barang: [
+                katalog: [
                     { nama: 'Kacamata', harga: '15.000' },
                     { nama: 'Ikat Rambut', harga: '10.000' },
                     { nama: 'Gelang', harga: '10.000' },
@@ -27,39 +38,17 @@
                     `;
                 },
                 katalog: function () {
-                    let barangList = pbo.model.barang.map((item) => `
-                        <tr>
-                            <td>${item.nama}</td>
-                            <td>${item.harga}</td>
-                            <td>${item.stok}</td>
-                        </tr>
-                    `).join('');
-                    
-                    return `
-                        <div class="katalog-barang">
-                            <h2>Katalog Barang</h2>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>Harga</th>
-                                        <th>Stok</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${barangList}
-                                </tbody>
-                            </table>
-                            <h3>Tambah Barang Baru</h3>
-                            <input type="text" id="namaBarang" placeholder="Nama Barang">
-                            <input type="text" id="hargaBarang" placeholder="Harga Barang">
-                            <input type="number" id="stokBarang" placeholder="Stok Barang">
-                            <button id="tambahBarang">Tambah</button>
-                        </div>
-                    `;
+                    const items = pbo.model.katalog.map(
+                        (item) => `
+                            <div class="katalog-item">
+                                <h3>${item.nama}</h3>
+                                <p>Harga: Rp${item.harga}</p>
+                            </div>
+                        `
+                    ).join('');
+                    return <div class="katalog-container">${items}</div>;
                 },
             },
-
             // Controller untuk perlakuan terhadap view dan database
             controller: {
                 init: function () {
@@ -80,10 +69,7 @@
 
                     if (userFound) {
                         alert('Login berhasil!');
-                        const app = document.getElementById('app');
-                        app.innerHTML = pbo.view.katalog();
-
-                        document.getElementById('tambahBarang').addEventListener('click', pbo.controller.tambahBarang);
+                        document.getElementById('app').innerHTML = pbo.view.katalog();
                     } else {
                         alert('Username atau Pin salah!');
                     }
@@ -93,27 +79,11 @@
                     document.getElementById('username').value = '';
                     document.getElementById('pin').value = '';
                 },
-                
-                tambahBarang: function () {
-                    const nama = document.getElementById('namaBarang').value;
-                    const harga = document.getElementById('hargaBarang').value;
-                    const stok = document.getElementById('stokBarang').value;
-
-                    if (nama && harga && stok) {
-                        pbo.model.barang.push({ nama, harga, stok: parseInt(stok) });
-                        alert('Barang berhasil ditambahkan!');
-                        
-                        const app = document.getElementById('app');
-                        app.innerHTML = pbo.view.katalog();
-                        
-                        document.getElementById('tambahBarang').addEventListener('click', pbo.controller.tambahBarang);
-                    } else {
-                        alert('Mohon isi semua kolom!');
-                    }
-                },
             },
         };
 
         // Inisialisasi programnya
         pbo.controller.init();
     </script>
+</body>
+</html>
