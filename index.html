@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,10 +19,10 @@
                     { username: 'salsadila', pin: 'salsadila05' },
                 ],
                 catalog: [
-                    { id: 1, name: 'Kacamata', price: 15000 },
-                    { id: 2, name: 'Kalung', price: 10000 },
-                    { id: 3, name: 'Ikat Rambut', price: 5000 },
-                    { id: 4, name: 'Jepitan Rambut', price: 5000 },
+                    { name: 'Kacamata', price: 15000, image: 'https://i.pinimg.com/736x/f8/b6/2d/f8b62d18c0bb253234ced500f369ffaa.jpg' },
+                    { name: 'Ikat Rambut', price: 10000, image: 'https://i.pinimg.com/236x/05/4a/69/054a69dd25e7fdf6217b43d44965950d.jpg' },
+                    { name: 'Headphones', price: 150000, image: 'https://i.pinimg.com/474x/bb/1c/7d/bb1c7d504768c99da8d6308716f2d097.jpg' },
+                    { name: 'Kipas Angin Mini', price: 60000, image: 'https://i.pinimg.com/236x/81/ca/56/81ca5677ea1e85f0122274a78adaa4e6.jpg' },
                 ],
             },
             // View untuk tampilan
@@ -41,13 +41,14 @@
                     const items = pbo.model.catalog.map(item => `
                         <div class="catalog-item">
                             <h3>${item.name}</h3>
-                            <p>Rp ${item.price.toLocaleString()}</p>
+                            <p>Harga: Rp ${item.price.toLocaleString()}</p>
                         </div>
                     `).join('');
                     return `
                         <div class="catalog">
-                            <h2>Catalog</h2>
+                            <h2>Catalog Barang</h2>
                             ${items}
+                            <button id="back">Kembali</button>
                         </div>
                     `;
                 },
@@ -73,7 +74,7 @@
 
                     if (userFound) {
                         alert('Login berhasil!');
-                        pbo.controller.showCatalog(); // Menampilkan katalog setelah login berhasil
+                        pbo.controller.showCatalog();
                     } else {
                         alert('Username atau Pin salah!');
                     }
@@ -87,6 +88,7 @@
                 showCatalog: function () {
                     const app = document.getElementById('app');
                     app.innerHTML = pbo.view.catalog();
+                    document.getElementById('back').addEventListener('click', pbo.controller.init);
                 },
             },
         };
