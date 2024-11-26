@@ -1,20 +1,76 @@
-.catalog {
-    margin-top: 20px;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #87CEFA;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.input-form, .catalog, .cart {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
 }
 
-.product-item {
+.catalog {
+    display: flex;
+    flex-direction: column;
+}
+
+.items {
+    display: flex;
+    flex-direction: column; /* Mengatur item dalam kolom */
+}
+
+.catalog-item {
     border-bottom: 1px solid #ccc;
-    padding: 10px 0;
+    padding-bottom: 10px;
 }
 
-.product-item h3 {
-    margin: 0;
+.catalog-item:last-child {
+    border-bottom: none; /* Menghapus garis bawah pada produk terakhir */
 }
 
-.product-item p {
-    margin: 5px 0;
+.catalog-item img {
+    max-width: 100%; /* Memastikan gambar responsif */
+    height:auto; /* Mempertahankan rasio aspek gambar */
+}
+
+.catalog-item h3 {
+    margin-top: 5px; /* Menambahkan jarak atas */
+}
+
+input {
+    width: calc(100% - 22px); /* Menghitung lebar dengan padding dan border */
+    padding: 10px;
+    margin-top: 10px; /* Menambahkan margin atas */
+}
+
+button {
+    width: calc(50% - 12px); /* Menghitung lebar dengan margin */
+    padding: 10px;
+    margin-top: 10px; /* Menambahkan margin atas */
+    border-radius: 4px;
+    cursor:pointer; 
+}
+
+button#login, button#view-cart, button#checkout, button#clear-cart {
+   background-color:#FFA07A; 
+   color:white; 
+   border:none; 
+   transition:.3s; 
+}
+
+button:hover {
+   background-color:#FF6347; 
+}
+
+button#cancel {
+   background-color:#6c757d; 
 }
