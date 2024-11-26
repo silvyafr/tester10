@@ -41,14 +41,13 @@
                     const items = pbo.model.catalog.map(item => `
                         <div class="catalog-item">
                             <h3>${item.name}</h3>
-                            <p>Harga: Rp ${item.price.toLocaleString()}</p>
+                            <p>Rp ${item.price.toLocaleString()}</p>
                         </div>
                     `).join('');
                     return `
                         <div class="catalog">
-                            <h2>Catalog Barang</h2>
+                            <h2>Catalog</h2>
                             ${items}
-                            <button id="back">Kembali</button>
                         </div>
                     `;
                 },
@@ -74,7 +73,7 @@
 
                     if (userFound) {
                         alert('Login berhasil!');
-                        pbo.controller.showCatalog();
+                        pbo.controller.showCatalog(); // Menampilkan katalog setelah login berhasil
                     } else {
                         alert('Username atau Pin salah!');
                     }
@@ -88,7 +87,6 @@
                 showCatalog: function () {
                     const app = document.getElementById('app');
                     app.innerHTML = pbo.view.catalog();
-                    document.getElementById('back').addEventListener('click', pbo.controller.init);
                 },
             },
         };
